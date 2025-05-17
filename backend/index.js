@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const router = express.Router();
-const TaskRouter = require('./routes/task');
+const TaskRouter = require('./routes/task.route');
 
-const TaskModel = require('./models/task');
+const TaskModel = require('./models/task.module');
 
 const app = express();
 

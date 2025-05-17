@@ -1,8 +1,6 @@
-const express = require('express');
-const taskModel = require('../models/task');
-const router = express.Router();
+const taskModel = require("../models/task.module");
 
-router.get("/", async (req, res)=>{
+const getAllTasks = async (req, res) => {
   try{
     const allTasks = await taskModel.find();
     res.status(200).json(allTasks);
@@ -10,9 +8,9 @@ router.get("/", async (req, res)=>{
   catch(err){
     res.status(500).json({error : err.message});
   }
-})
+};
 
-router.get("/:id", async (req, res)=>{
+const getTaskById = async (req, res) => {
   try{
     const task = await taskModel.findById(req.params.id);
     res.status(200).json(task);
@@ -20,9 +18,9 @@ router.get("/:id", async (req, res)=>{
   catch(err){
     res.status(500).json({error : err.message});
   }
-})
+};
 
-router.post("/add", async (req, res)=> {
+const addTask = async (req, res) =>{
   try{
     const {title, description} = req.body;
 
@@ -38,9 +36,9 @@ router.post("/add", async (req, res)=> {
   catch(err){
     res.status(500).json({error: err.message});
   }
-})
+};
 
-router.delete("/:id", async (req, res)=>{
+const deleteTask = async (req, res) => {
   try{
     const task = await taskModel.findByIdAndDelete(req.params.id);
     if(!task){
@@ -51,9 +49,9 @@ router.delete("/:id", async (req, res)=>{
   catch(err){
     res.status(500).json({error: err.message});
   }
-})
+};
 
-router.put("/:id", async (req, res)=>{
+const updateTask = async (req, res) => {
   try{
     const {id} = req.params;
     const task = await taskModel.findByIdAndUpdate(id, req.body);
@@ -68,6 +66,12 @@ router.put("/:id", async (req, res)=>{
   catch(err){
     res.status(500).json({error: err.message});
   }
-})
+};
 
-module.exports = router;
+module.exports = {
+  getAllTasks,
+  getTaskById,
+  addTask,
+  deleteTask,
+  updateTask
+}
